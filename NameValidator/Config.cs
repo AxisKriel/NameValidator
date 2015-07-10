@@ -28,9 +28,9 @@ namespace NameValidator
 		public string InvalidChars = "";
 
 		/// <summary>
-		/// A regex to match character names against. A matching name is deemed as invalid.
+		/// A list of regexes to match character names against. A matching name is deemed as invalid.
 		/// </summary>
-		public string InvalidNameRegex = "";
+		public List<string> InvalidNameRegexes = new List<string>();
 
 		/// <summary>
 		/// Whether to kick any player using characters that the Terraria font doesn't natively support.

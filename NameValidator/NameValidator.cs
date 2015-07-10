@@ -15,7 +15,7 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 19)]
 	public class NameValidator : TerrariaPlugin
 	{
 		// If this fails, rip
@@ -133,8 +133,14 @@ namespace NameValidator
 			}
 
 			// Regex check
-			if (!String.IsNullOrWhiteSpace(Config.InvalidNameRegex) && Regex.IsMatch(s, Config.InvalidNameRegex))
-				return false;
+			if (Config.InvalidNameRegexes != null)
+			{
+				foreach (string regex in Config.InvalidNameRegexes)
+				{
+					if (Regex.IsMatch(s, regex))
+						return false;
+				}
+			}
 
 			// Invalid char check and return if valid
 			return !Config.InvalidChars.Intersect(s).Any();
