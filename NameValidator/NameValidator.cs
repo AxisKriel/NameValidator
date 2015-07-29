@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Markup;
 using System.Windows.Media;
 using Terraria;
 using TerrariaApi.Server;
@@ -15,7 +11,7 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(1, 19)]
+	[ApiVersion(1, 20)]
 	public class NameValidator : TerrariaPlugin
 	{
 		// If this fails, rip
