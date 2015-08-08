@@ -11,7 +11,7 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(1, 20)]
+	[ApiVersion(1, 21)]
 	public class NameValidator : TerrariaPlugin
 	{
 		// If this fails, rip
@@ -49,7 +49,7 @@ namespace NameValidator
 		{
 			if (disposing)
 			{
-				ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
+				ServerApi.Hooks.NetGreetPlayer.Register(this, OnJoin);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace NameValidator
 			string path = Path.Combine(TShock.SavePath, "NameValidator.json");
 			Config = Config.Read(path);
 
-			ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
+			ServerApi.Hooks.NetGreetPlayer.Register(this, OnJoin);
 
 			Commands.ChatCommands.Add(new Command("namevalidator.reload", (args) =>
 			{
@@ -71,13 +71,14 @@ namespace NameValidator
 			}, "nvreload"));
 		}
 
-		private void OnJoin(JoinEventArgs e)
+		private void OnJoin(GreetPlayerEventArgs e)
 		{
 			if (e.Handled || e.Who < 0 || e.Who > Main.player.Length - 1)
 				return;
 
 			Player player = Main.player[e.Who];
-			if (player != null)
+			// If the player's name is null then it most likely isn't a real player
+			if (!String.IsNullOrEmpty(player?.name))
 			{
 				string name = player.name;
 				if (!ValidateString(name))
