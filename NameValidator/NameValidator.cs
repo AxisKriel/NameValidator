@@ -11,7 +11,7 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(1, 21)]
+	[ApiVersion(1, 22)]
 	public class NameValidator : TerrariaPlugin
 	{
 		// If this fails, rip
