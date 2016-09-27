@@ -11,31 +11,18 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(1, 23)]
+	[ApiVersion(1, 24)]
 	public class NameValidator : TerrariaPlugin
 	{
-		// If this fails, rip
 		private FontFamily font;
 
-		public override string Author
-		{
-			get { return "Enerdy"; }
-		}
+		public override string Author => "Enerdy";
 
-		public override string Description
-		{
-			get { return "Validate character names on join based on a configuration file."; }
-		}
+		public override string Description => "Validate character names on join based on a configuration file.";
 
-		public override string Name
-		{
-			get { return "Name Validator"; }
-		}
+		public override string Name => "Name Validator";
 
-		public override Version Version
-		{
-			get { return Assembly.GetExecutingAssembly().GetName().Version; }
-		}
+		public override Version Version => Assembly.GetExecutingAssembly().GetName().Version;
 
 		private Config Config { get; set; }
 
@@ -57,7 +44,7 @@ namespace NameValidator
 		{
 			string fontname = "Andy";
 			if ((font = Fonts.SystemFontFamilies.FirstOrDefault(f => f.Source.Equals(fontname, StringComparison.OrdinalIgnoreCase))) == null)
-				TShock.Log.ConsoleError("The font '{0}' was not found.", fontname);
+				TShock.Log.ConsoleError($"The font '{fontname}' was not found.");
 
 			string path = Path.Combine(TShock.SavePath, "NameValidator.json");
 			Config = Config.Read(path);
@@ -87,12 +74,12 @@ namespace NameValidator
 					{
 						case "ban":
 							TShock.Utils.Ban(TShock.Players[e.Who], Config.Reason);
-							TShock.Log.ConsoleInfo("Player '{0}' was banned for \"{1}\".", name, Config.Reason);
+							TShock.Log.ConsoleInfo($"Player '{name}' was banned for \"{Config.Reason}\".");
 							e.Handled = true;
 							return;
 						case "kick":
 							TShock.Utils.Kick(TShock.Players[e.Who], Config.Reason, silent: true);
-							TShock.Log.ConsoleInfo("Player '{0}' was kicked for \"{1}\".", name, Config.Reason);
+							TShock.Log.ConsoleInfo($"Player '{name}' was kicked for \"{Config.Reason}\".");
 							e.Handled = true;
 							return;
 						default:
