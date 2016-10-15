@@ -11,7 +11,7 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(1, 24)]
+	[ApiVersion(1, 25)]
 	public class NameValidator : TerrariaPlugin
 	{
 		private FontFamily font;
