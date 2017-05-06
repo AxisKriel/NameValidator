@@ -11,7 +11,7 @@ using TShockAPI;
 
 namespace NameValidator
 {
-	[ApiVersion(2, 0)]
+	[ApiVersion(2, 1)]
 	public class NameValidator : TerrariaPlugin
 	{
 		private FontFamily font;
@@ -103,10 +103,9 @@ namespace NameValidator
 				foreach (char c in s)
 				{
 					ICollection<Typeface> typefaces = font.GetTypefaces();
-					GlyphTypeface glyph;
 					foreach (Typeface t in typefaces)
 					{
-						t.TryGetGlyphTypeface(out glyph);
+						t.TryGetGlyphTypeface(out GlyphTypeface glyph);
 						if (glyph != null && !glyph.CharacterToGlyphMap.ContainsKey(Convert.ToInt16(c)))
 						{
 							// Spot detected
@@ -121,13 +120,24 @@ namespace NameValidator
 			{
 				foreach (string regex in Config.InvalidNameRegexes)
 				{
-					if (Regex.IsMatch(s, regex))
-						return false;
+					if (Config.IgnoreCase)
+					{
+						if (Regex.IsMatch(s, regex, RegexOptions.IgnoreCase))
+							return false;
+					}
+					else
+					{
+						if (Regex.IsMatch(s, regex))
+							return false;
+					}
 				}
 			}
 
 			// Invalid char check and return if valid
-			return !Config.InvalidChars.Intersect(s).Any();
+			if (Config.IgnoreCase)
+				return !Config.InvalidChars.ToLowerInvariant().Intersect(s.ToLowerInvariant()).Any();
+			else
+				return !Config.InvalidChars.Intersect(s).Any();
 		}
 	}
 }

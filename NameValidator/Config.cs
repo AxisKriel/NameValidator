@@ -20,6 +20,11 @@ namespace NameValidator
 		public string Reason = "Invalid character name.";
 
 		/// <summary>
+		/// Whether or not the validator should ignore letter casing when matching character names.
+		/// </summary>
+		public bool IgnoreCase = true;
+
+		/// <summary>
 		/// A string containing chars a character name can't have.
 		/// </summary>
 		public string InvalidChars = "";
